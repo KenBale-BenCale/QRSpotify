@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-
+keyboardactive = False    #Toggle to activate/deactivate keyboard controls
 
 logging.basicConfig(level=logging.INFO)
 
@@ -111,17 +111,18 @@ class InputHandler:
 
             # --- Keyboard input ---
             # Volume
-            if keyboard.is_pressed('w'):
-                self.spc.volume_delta(10)
-            if keyboard.is_pressed('s'):
-                self.spc.volume_delta(-10)
+            if keyboardactive == True:
+                if keyboard.is_pressed('w'):
+                    self.spc.volume_delta(10)
+                if keyboard.is_pressed('s'):
+                    self.spc.volume_delta(-10)
             # Skip tracks
-            if keyboard.is_pressed('d'):
-                self.spc.next_track()
-            if keyboard.is_pressed('a'):
-                self.spc.previous_track()  # same logic as GPIO double-press optional
+                if keyboard.is_pressed('d'):
+                    self.spc.next_track()
+                if keyboard.is_pressed('a'):
+                    self.spc.previous_track()  # same logic as GPIO double-press optional
             # Play/Pause
-            if keyboard.is_pressed('space'):
-                self.spc.toggle_play_pause()
+                if keyboard.is_pressed('space'):
+                    self.spc.toggle_play_pause()
 
-            time.sleep(0.05)  # 50ms polling
+                time.sleep(0.05)  # 50ms polling
