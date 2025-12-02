@@ -1,0 +1,46 @@
+sudo apt update && sudo apt full-upgrade -y    # Update system packages
+sudo rpi-update                                # Update firmware to latest
+sudo reboot                                     # Reboot after firmware update
+###
+
+sudo raspi-config nonint do_camera 0           # Enable the camera interface
+sudo reboot                                     # Apply camera enable, reboot
+###
+
+sudo apt install -y python3-pip python3-venv python3-dev libatlas-base-dev libjpeg-dev libopenjp2-7-dev libtiff5 libjasper-dev libavcodec58 libavformat58 libswscale5 libzbar0 zbar-tools libcamera-dev libcamera-apps ffmpeg git curl  # Install all system dependencies
+###
+
+mkdir ~/QRSpotify                               # Create project directory
+cd ~/QRSpotify                                  # Enter project directory
+python3 -m venv venv                            # Create Python virtual environment
+source venv/bin/activate                        # Activate virtual environment
+###
+
+pip install --upgrade pip                       # Upgrade pip
+pip install spotipy                             # Spotify API library
+pip install pyzbar                              # QR decoding
+pip install opencv-python-headless              # OpenCV without GUI
+pip install picamera2                           # Picamera2 Python library
+pip install RPi.GPIO                            # Raspberry Pi GPIO control
+pip install numpy                               # NumPy required by OpenCV
+pip install requests                             # HTTP requests library
+pip install pillow                               # Image processing helpers
+###
+
+sudo apt install -y libilmbase-dev libopenexr-dev libgstreamer1.0-dev   # Optional: improve OpenCV performance/loading
+###
+
+sudo usermod -aG video pi                       # Give Pi user access to camera
+sudo usermod -aG gpio pi                        # Give Pi user access to GPIO
+sudo reboot                                      # Apply group membership
+###
+
+cd ~/QRSpotify                                  # Return to project folder
+source venv/bin/activate                        # Reactivate virtual environment
+###
+
+libcamera-still -o test.jpg                     # Test camera is working
+zbarimg test.jpg                                # Test QR reading on sample image
+###
+
+git clone https://github.com/yourusername/yourrepo.git   # Download your repo (replace with your URL)
